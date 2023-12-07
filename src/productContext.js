@@ -81,7 +81,7 @@ export function ProductContext({ children }) {
         // check whether user is logged in or not
         if (isLoggedIn) {
             // getting real-time update of data
-            const unsub = onSnapshot(doc(db, "shopyshop", userLoggedIn.id), (doc) => {
+            const unsub = onSnapshot(doc(db, "shopmall", userLoggedIn.id), (doc) => {
                 // storing all the data in cart
                 setCart(doc.data().cart);
                 setMyOrders(doc.data().orders);
@@ -140,7 +140,7 @@ export function ProductContext({ children }) {
         setItemInCart(itemInCart - 1);
 
         // update cart in array
-        const userRef = doc(db, "shopyshop", userLoggedIn.id);
+        const userRef = doc(db, "shopmall", userLoggedIn.id);
         await updateDoc(userRef, {
             cart: cart
         });
@@ -168,7 +168,7 @@ export function ProductContext({ children }) {
         }
 
         // add product to the cart of loggedIn user
-        const userRef = doc(db, "shopyshop", userLoggedIn.id);
+        const userRef = doc(db, "shopmall", userLoggedIn.id);
         await updateDoc(userRef, {
             cart: arrayUnion({ quantity: 1, ...product })
         });
@@ -184,7 +184,7 @@ export function ProductContext({ children }) {
     // remove a single product from cart
     async function removeFromCart(product) {
         // update database 
-        const userRef = doc(db, "shopyshop", userLoggedIn.id);
+        const userRef = doc(db, "shopmall", userLoggedIn.id);
         await updateDoc(userRef, {
             cart: arrayRemove(product)
         });
@@ -206,7 +206,7 @@ export function ProductContext({ children }) {
         }
 
         // empty cart array in database
-        const userRef = doc(db, "shopyshop", userLoggedIn.id);
+        const userRef = doc(db, "shopmall", userLoggedIn.id);
         await updateDoc(userRef, {
             cart: []
         });
@@ -225,7 +225,7 @@ export function ProductContext({ children }) {
         const currentDate = getDate();
 
         // adding order to database
-        const userRef = doc(db, "shopyshop", userLoggedIn.id);
+        const userRef = doc(db, "shopmall", userLoggedIn.id);
         await updateDoc(userRef, {
             orders: arrayUnion({ date: currentDate, list: cart, amount: total })
         });
